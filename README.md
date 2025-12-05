@@ -145,6 +145,16 @@ Capturing system audio is low-level and OS-dependent, so this feature is planned
 │     ├── web_eq.py
 │     ├── svm_genre_model_PRO.pkl
 │     ├── label_encoder.pkl
+│     
+│
+│── TestAudioFiles/          # Sample .wav files for testing the model
+│     ├── blues/
+│     ├── classical/
+│     ├── hiphop/
+│     ├── jazz/
+│     ├── metal/
+│     ├── pop/
+│     ├── rock/
 │
 │── Training/
 │     ├── mfcc.py
@@ -154,8 +164,9 @@ Capturing system audio is low-level and OS-dependent, so this feature is planned
 │     ├── svm_genre_model.pkl
 │     ├── svm_genre_model_tuned.pkl
 │
-│── requirements.txt
+├── requirements.txt
 │── README.md
+
 ```
 
 🛠Installation
