@@ -14,8 +14,8 @@ N_CHROMA = 12
 # ---------------------------------------------------------
 # LOAD MODEL + LABEL ENCODER (must be in same folder)
 # ---------------------------------------------------------
-model = joblib.load("svm_genre_model_PRO.pkl")
-label_encoder = joblib.load("label_encoder.pkl")
+model = joblib.load("(BASE_DIR /svm_genre_model_PRO.pkl")
+label_encoder = joblib.load("(BASE_DIR /label_encoder.pkl")
 
 # ---------------------------------------------------------
 # GENRE EQ PRESETS (values match your description)
@@ -190,3 +190,4 @@ for i, (col, band) in enumerate(zip(cols, bands)):
 # If you want to inspect values, uncomment this:
 # with st.expander("Show equalizer values (for report/demo)"):
 #     st.write(eq_values)
+
