@@ -11,16 +11,12 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPen, QColor
 
-# ---------------------------------------------------------
-# SETTINGS
-# ---------------------------------------------------------
+
 SAMPLE_RATE = 22050
 N_MFCC = 20
 N_CHROMA = 12
 
-# ---------------------------------------------------------
-# LOAD MODEL + LABEL ENCODER
-# ---------------------------------------------------------
+
 try:
     model = joblib.load("svm_genre_model_PRO.pkl")
     label_encoder = joblib.load("label_encoder.pkl")
@@ -28,9 +24,7 @@ except Exception as e:
     print("Error loading model or label encoder:", e)
     sys.exit(1)
 
-# ---------------------------------------------------------
-# GENRE EQ PRESETS  (32, 64, 125, 250, 500, 1k, 2k, 4k, 8k, 16k)
-# ---------------------------------------------------------
+
 EQ_PRESETS = {
     "rock":      [+60, +10, -20,   0,   0, -20,   0, -20,   0, +60],
     "jazz":      [  0,   0,   0, +10, +10, -50,  -5,   0,   0,   0],
@@ -46,9 +40,7 @@ BANDS = [
     "1 kHz", "2 kHz", "4 kHz", "8 kHz", "16 kHz"
 ]
 
-# ---------------------------------------------------------
-# FEATURE EXTRACTION
-# ---------------------------------------------------------
+
 def extract_features(file_path):
     y, sr = librosa.load(file_path, sr=SAMPLE_RATE, mono=True)
 
@@ -83,13 +75,11 @@ def extract_features(file_path):
 
     return np.array(features).reshape(1, -1)
 
-# ---------------------------------------------------------
-# CUSTOM SLIDER (grey by default, green segment from 0 to value)
-# ---------------------------------------------------------
+
 class EQSlider(QSlider):
     def __init__(self, parent=None):
         super().__init__(Qt.Vertical, parent)
-        # neutral style: grey groove & handle, no green from stylesheet
+       
         self.setStyleSheet("""
             QSlider::groove:vertical {
                 background: #333333;
@@ -114,12 +104,12 @@ class EQSlider(QSlider):
         """)
 
     def paintEvent(self, event):
-        # First let Qt draw the normal slider (all grey)
+      
         super().paintEvent(event)
 
         v = self.value()
         if v == 0:
-            # at 0 we want no green at all
+          
             return
 
         painter = QPainter(self)
@@ -134,14 +124,14 @@ class EQSlider(QSlider):
         height = rect.height() - margin_top - margin_bottom
 
         def value_to_y(val):
-            # map val in [min,max] -> y coordinate
+          
             ratio = (val - min_val) / float(max_val - min_val)
             return int(rect.bottom() - margin_bottom - ratio * height)
 
         zero_y = value_to_y(0)
         curr_y = value_to_y(v)
 
-        # choose segment from 0 to current value
+      
         if v > 0:
             y1, y2 = curr_y, zero_y
         else:
@@ -152,9 +142,7 @@ class EQSlider(QSlider):
         painter.drawLine(x, y1, x, y2)
         painter.end()
 
-# ---------------------------------------------------------
-# MAIN WINDOW
-# ---------------------------------------------------------
+
 class GenreEQApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -168,7 +156,7 @@ class GenreEQApp(QWidget):
         self.setWindowTitle("AI Music Genre Detection - Desktop")
         self.setMinimumSize(900, 550)
 
-        # ---------- DARK THEME BASE ----------
+     
         self.setStyleSheet("""
             QWidget {
                 background-color: #121212;
@@ -217,7 +205,7 @@ class GenreEQApp(QWidget):
         main_layout.setContentsMargins(20, 15, 20, 15)
         main_layout.setSpacing(10)
 
-        # ---------- Header ----------
+   
         title_label = QLabel("🎵 AI Music Genre Detection")
         title_label.setObjectName("TitleLabel")
         main_layout.addWidget(title_label)
@@ -226,7 +214,7 @@ class GenreEQApp(QWidget):
         subtitle_label.setObjectName("SubtitleLabel")
         main_layout.addWidget(subtitle_label)
 
-        # ---------- File row ----------
+   
         file_row = QHBoxLayout()
         file_row.setSpacing(10)
 
@@ -242,19 +230,18 @@ class GenreEQApp(QWidget):
 
         main_layout.addLayout(file_row)
 
-        # Separator line
+
         line = QFrame()
         line.setFrameShape(QFrame.HLine)
         line.setFrameShadow(QFrame.Sunken)
         line.setStyleSheet("color: #333333;")
         main_layout.addWidget(line)
 
-        # ---------- Genre label ----------
         self.genre_label = QLabel("Predicted Genre: ---")
         self.genre_label.setObjectName("GenreLabel")
         main_layout.addWidget(self.genre_label)
 
-        # ---------- Equalizer group ----------
+       
         eq_group = QGroupBox("Equalizer (UI Demo Only)")
         eq_group.setFixedHeight(320)
         eq_layout = QHBoxLayout()
@@ -294,7 +281,7 @@ class GenreEQApp(QWidget):
         eq_group.setLayout(eq_layout)
         main_layout.addWidget(eq_group)
 
-        # Info label
+  
         info_label = QLabel(
             "Note: Sliders are for visual demonstration only and do not modify the audio.\n"
             "When a genre is detected, sliders jump to that genre's preset, but you can still adjust them manually."
@@ -307,12 +294,12 @@ class GenreEQApp(QWidget):
 
         self.update_value_labels()
 
-    # ---------- slider labels ----------
+
     def update_value_labels(self):
         for label, slider in zip(self.value_labels, self.sliders):
             label.setText(str(slider.value()))
 
-    # ---------- File handling ----------
+
     def choose_file(self):
         file_path, _ = QFileDialog.getOpenFileName(
             self,
@@ -345,11 +332,9 @@ class GenreEQApp(QWidget):
 
         self.update_value_labels()
 
-# ---------------------------------------------------------
-# MAIN
-# ---------------------------------------------------------
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GenreEQApp()
     window.show()
     sys.exit(app.exec_())
+
