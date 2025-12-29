@@ -36,7 +36,7 @@ The system predicts one of 7 genres:
 
 Using a tuned SVM model trained on the "GTZAN dataset", the final accuracy reached:
 
-⭐ **~77% Test Accuracy (with PRO features)
+⭐ **~0.733% Test Accuracy (with PRO features)
 
 🎚 Adaptive Equalizer (UI Prototype Only)
 
