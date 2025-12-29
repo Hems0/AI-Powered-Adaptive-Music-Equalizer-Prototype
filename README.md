@@ -12,7 +12,6 @@ The system uses:
 * "Machine Learning" (SVM) to classify genres
 * "Audio signal processing" (MFCC, spectral features, etc.)
 * A "Streamlit web app" for a clean UI
-* A "PyQt5 desktop application" for a real software experience
 * A visual-only "adaptive equalizer" that changes based on the predicted genre
 
 The idea comes from a simple pain point:
@@ -50,7 +49,7 @@ Genre presets include Rock, Pop, Jazz, Classical, Hip-Hop, Metal, and Blues.
 
 
 
-💻 Two Application Versions Included
+💻Application
 
 1️⃣ Web App — Streamlit
 
@@ -66,17 +65,6 @@ Run using:
 streamlit run web_eq.py
 ```
 
-2️⃣ Desktop App — PyQt5
-
-* Equalizer UI in classic desktop style
-* Real-application feel
-* Useful for future integration with system audio
-
-Run using:
-
-```
-python desktop_eq_app.py
-```
 
 🔬How the AI Works
 
@@ -141,7 +129,6 @@ Capturing system audio is low-level and OS-dependent, so this feature is planned
 ```
 /
 │── FINAL/
-│     ├── desktop_eq_app.py
 │     ├── web_eq.py
 │     ├── svm_genre_model_PRO.pkl
 │     ├── label_encoder.pkl
@@ -184,10 +171,6 @@ pip install -r requirements.txt
 streamlit run web_eq.py
 ```
 
-▶ Run the Desktop App
-```
-python desktop_eq_app.py
-```
 
  ❤️Why I Built This
 
